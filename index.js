@@ -15,26 +15,28 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.get("/", (req, res) => {
-  res.render("sendSms.ejs");
+  console.log("Server start")
+  res.render("sendSms");
 })
 
-app.post("/sendSMS", function (req, res) {
+app.post("/", function (req, res) {
   const {number, content} = req.body;
   console.log(number, content);
+ 
+  const accountSid = 'ACb0b0b19903b71165a978c48b7947c1ca'; 
+const authToken = 'ff3dacfba3f7d5bfd33a74e70f48c288'; 
+const client = require('twilio')(accountSid, authToken); 
+ 
+client.messages 
+      .create({ 
+         body: content,  
+         messagingServiceSid: 'MG68b9e9e5b2085235751b5df2cf9d8b3a',      
+         to: number 
+       }) 
+      .then(message => console.log(message.sid)) 
+      .done();
   res.redirect("/");
 
-  const accountSid = 'ACb0b0b19903b71165a978c48b7947c1ca'; 
-  const authToken = 'd021c6fd04b4e6bfc015352eff87349b'; 
-  const client = require('twilio')(accountSid, authToken); 
- 
-  client.messages 
-      .create({ 
-         body: `${content}`,  
-         messagingServiceSid: 'MG68b9e9e5b2085235751b5df2cf9d8b3a',      
-         to: `${number}` 
-       }) 
-      .then(message => console.log(message.body)) 
-      .done();
 });
 
 const PORT = 3000 || process.env.PORT;
