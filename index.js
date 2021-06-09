@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser')
 
 
+require('dotenv').config();
+
 //set template engine
 app.set('view engine', 'ejs');
 
@@ -35,4 +37,5 @@ app.post("/sendSMS", function (req, res) {
       .done();
 });
 
-app.listen(3000);
+const PORT = 3000 || process.env.PORT;
+app.listen(PORT);
