@@ -12,14 +12,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get("/sendSMS", (req, res) => {
+app.get("/", (req, res) => {
   res.render("sendSms.ejs");
 })
 
 app.post("/sendSMS", function (req, res) {
   const {number, content} = req.body;
   console.log(number, content);
-  res.redirect("/sendSMS");
+  res.redirect("/");
 
   const accountSid = 'ACb0b0b19903b71165a978c48b7947c1ca'; 
   const authToken = 'd021c6fd04b4e6bfc015352eff87349b'; 
